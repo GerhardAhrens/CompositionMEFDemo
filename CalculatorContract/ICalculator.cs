@@ -8,6 +8,8 @@
     {
         string Version { get; }
 
+        Version ModulVersion { get; }
+
         string Description {get;}
 
         Modulname Modul { get; }

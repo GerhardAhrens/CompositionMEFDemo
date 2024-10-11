@@ -18,6 +18,11 @@
             }
         }
 
+        public Version ModulVersion
+        {
+            get { return new Version(1, 0, 0); }
+        }
+
         public string Description
         {
             get { return "Addition"; }

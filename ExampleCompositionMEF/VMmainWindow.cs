@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
@@ -16,6 +15,7 @@
         private List<ICalculator> calculators = new List<ICalculator>();
         private Dictionary<Modulname, string> myParts = new Dictionary<Modulname, string>();
         private Modulname selectedPart = Modulname.None;
+        private Version minimalModulVersion = new Version(1,1,0);
         private int selectedIndex = 0;
         private decimal value1 = 0;
         private decimal value2 = 0;
@@ -30,7 +30,14 @@
             
             foreach (var ca in this.calculators)
             {
-                myParts.Add(ca.Modul,$"{ca.Description} ({ca.Version})");
+                if (this.MinimalModulVersion == ca.ModulVersion)
+                {
+                    this.myParts.Add(ca.Modul, $"{ca.Description} ({ca.ModulVersion})");
+                }
+                else
+                {
+                    this.myParts.Add(ca.Modul, $"{ca.Description} ({ca.ModulVersion}) Veraltet");
+                }
             }
 
             if (this.calculators.Any())
@@ -38,11 +45,21 @@
                 this.SelectedIndex = 0;
                 this.SelectedPart = calculators.First<ICalculator>().Modul;
             }
-        }      
+        }
+
+        public Version MinimalModulVersion
+        {
+            get { return this.minimalModulVersion; }
+            set
+            {
+                this.minimalModulVersion = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         public Dictionary<Modulname, string> MyParts
         {
-            get { return myParts; }
+            get { return this.myParts; }
             set
             { 
                 this.myParts = value; 
@@ -52,27 +69,29 @@
 
         public Modulname SelectedPart
         {
-            get { return selectedPart; }
+            get { return this.selectedPart; }
             set
             { 
-                this.selectedPart = value; 
-                this.OnPropertyChanged(); 
+                this.selectedPart = value;
+                this.Value1 = 0;
+                this.Value2 = 0;
+                this.OnPropertyChanged();
             }
         }
 
         public int SelectedIndex
         {
-            get { return selectedIndex; }
+            get { return this.selectedIndex; }
             set 
             { 
-                selectedIndex = value; 
+                this.selectedIndex = value; 
                 this.OnPropertyChanged(); 
             }
         }
 
         public decimal Value1 
         {
-            get { return value1; }
+            get { return this.value1; }
             set
             { 
                 this.value1 = value; 
@@ -82,7 +101,7 @@
 
         public decimal Value2
         {
-            get { return value2; }
+            get { return this.value2; }
             set
             { 
                 this.value2 = value; 
@@ -93,14 +112,13 @@
         decimal calcResult = 0;
         public decimal CalcResult
         {
-            get { return calcResult; }
+            get { return this.calcResult; }
             set
             {
                 this.calcResult = value;
                 this.OnPropertyChanged();
             }
         }
-
 
         #region Calculation Command
 
@@ -113,11 +131,11 @@
         {
             get
             {
-                if (calcCommand == null)
+                if (this.calcCommand == null)
                 {
-                    calcCommand = new RelayCommand(param => this.Calculate(), param => true); 
+                    this.calcCommand = new RelayCommand(param => this.Calculate(), param => true); 
                 }
-                return calcCommand;
+                return this.calcCommand;
             }
         }
 
@@ -128,13 +146,10 @@
         {
             try
             {
-                ICalculator modul = (from calc in calculators
-                                 where calc.Modul == SelectedPart
-                                     select calc).FirstOrDefault();
-
+                ICalculator modul = this.calculators.Where(w => w.Modul == SelectedPart).Select(s => s).FirstOrDefault();
                 if (modul != null)
                 {
-                    this.CalcResult = modul.Calculate(Value1, Value2);
+                    this.CalcResult = modul.Calculate(this.Value1, this.Value2);
                 }
             }
             catch (Exception ex)
