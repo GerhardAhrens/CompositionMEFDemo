@@ -32,11 +32,11 @@
             {
                 if (this.MinimalModulVersion == ca.ModulVersion)
                 {
-                    this.myParts.Add(ca.Modul, $"{ca.Description} ({ca.ModulVersion})");
+                    this.myParts.Add(ca.Modul, $"{ca.ShortDescription} ({ca.ModulVersion})");
                 }
                 else
                 {
-                    this.myParts.Add(ca.Modul, $"{ca.Description} ({ca.ModulVersion}) Veraltet");
+                    this.myParts.Add(ca.Modul, $"{ca.ShortDescription} ({ca.ModulVersion}) Veraltet");
                 }
             }
 

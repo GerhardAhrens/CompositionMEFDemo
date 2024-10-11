@@ -23,9 +23,14 @@
             get { return new Version(1, 0, 0); }
         }
 
-        public string Description
+        public string ShortDescription
         {
             get { return "Addition"; }
+        }
+
+        public string Description
+        {
+            get { return "Zwei Werte addieren"; }
         }
 
         public Modulname Modul

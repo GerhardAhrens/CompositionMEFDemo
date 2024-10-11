@@ -20,12 +20,19 @@
                 x:Name="lstCalculators"
                 MinWidth="200"
                 MaxWidth="300"
-                DisplayMemberPath="Value"
                 IsSynchronizedWithCurrentItem="True"
                 ItemsSource="{Binding Path=MyParts, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                 SelectedIndex="{Binding Path=SelectedIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                 SelectedValue="{Binding Path=SelectedPart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                SelectedValuePath="Key" />
+                SelectedValuePath="Key">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Value}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </GroupBox>
 
         <StackPanel DockPanel.Dock="Top" Orientation="Vertical">

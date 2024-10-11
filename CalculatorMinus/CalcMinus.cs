@@ -24,9 +24,14 @@
             get { return new Version(1,1,0); }
         }
 
-        public string Description
+        public string ShortDescription
         {
             get { return "Subtraction"; }
+        }
+
+        public string Description
+        {
+            get { return "Zwei Werte von einander subtrahieren"; }
         }
 
         public Modulname Modul

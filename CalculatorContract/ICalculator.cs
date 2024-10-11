@@ -10,7 +10,9 @@
 
         Version ModulVersion { get; }
 
-        string Description {get;}
+        string Description { get; }
+
+        string ShortDescription {get;}
 
         Modulname Modul { get; }
 
@@ -27,6 +29,7 @@
     {
         None = 0,
         Subtraction = 1,
-        Addition = 3
+        Addition = 3,
+        Brutto = 4
     }
 }
