@@ -1,0 +1,73 @@
+﻿<Window
+    x:Class="ExampleCompositionMEF.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ExampleCompositionMEF"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CalcCommand}" Gesture="CTRL+R" />
+    </Window.InputBindings>
+
+    <DockPanel>
+
+        <GroupBox DockPanel.Dock="Left" Header="Module">
+            <ListBox
+                x:Name="lstCalculators"
+                MinWidth="200"
+                MaxWidth="300"
+                DisplayMemberPath="Value"
+                IsSynchronizedWithCurrentItem="True"
+                ItemsSource="{Binding Path=MyParts, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                SelectedIndex="{Binding Path=SelectedIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                SelectedValue="{Binding Path=SelectedPart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                SelectedValuePath="Key" />
+        </GroupBox>
+
+        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+
+            <StackPanel Orientation="Horizontal">
+                <Label>Wert1:</Label>
+                <TextBox
+                    MinWidth="100"
+                    HorizontalContentAlignment="Right"
+                    Text="{Binding Path=Value1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label>Wert2:</Label>
+                <TextBox
+                    MinWidth="100"
+                    HorizontalContentAlignment="Right"
+                    Text="{Binding Path=Value2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            </StackPanel>
+
+            <Button
+                Margin="10,10,10,10"
+                Command="{Binding CalcCommand}"
+                Content="Calculate" />
+
+            <StackPanel Orientation="Horizontal">
+                <Label>Ergebnis:</Label>
+                <Border
+                    BorderBrush="DarkGray"
+                    BorderThickness="1"
+                    CornerRadius="3">
+                    <TextBlock
+                        MinWidth="100"
+                        HorizontalAlignment="Right"
+                        FontWeight="Bold"
+                        IsEnabled="False"
+                        Text="{Binding Path=CalcResult, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                        TextAlignment="Center" />
+                </Border>
+            </StackPanel>
+
+        </StackPanel>
+
+    </DockPanel>
+</Window>

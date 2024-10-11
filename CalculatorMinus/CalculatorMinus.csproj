@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <Title>CalculatorMinus (MEF)</Title>
+    <AssemblyVersion>1.0.2024.1</AssemblyVersion>
+    <FileVersion>1.0.2024.1</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CalculatorContract\CalculatorContract.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo Configuration: $(Configuration)&#xD;&#xA;echo VisualStudioVersion: $(VisualStudioVersion)&#xD;&#xA;echo DLL: $(ProjectDir)$(OutDir)$(AssemblyName).dll&#xD;&#xA;echo SLN: $(SolutionDir)ExampleCompositionMEF\$(OutDir)&#xD;&#xA;copy $(ProjectDir)$(OutDir)$(AssemblyName).dll $(SolutionDir)ExampleCompositionMEF\$(OutDir)&#xD;&#xA;" />
+  </Target>
+
+</Project>
