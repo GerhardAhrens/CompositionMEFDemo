@@ -4,6 +4,7 @@
 Gemeinsames Interface "CalculatorContract"\
 Plug In A: CalculatorMinus\
 Plug In B: CalculatorPlus\
+Plug In C: CalculatorBrutto\
 WPF mit MVVM als Beispielprogramm "ExampleCompositionMEF"\
 ***
 
